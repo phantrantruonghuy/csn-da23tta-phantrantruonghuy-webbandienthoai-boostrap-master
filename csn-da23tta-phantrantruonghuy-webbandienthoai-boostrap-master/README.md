@@ -6,6 +6,7 @@ Dự án website bán điện thoại với giao diện hiện đại, thân thi
 
 ## ✨ Tính năng chính
 
+### 📄 Các trang nội dung
 
 1. **Trang chủ (index.html)**
    - Banner slider giới thiệu khuyến mãi
