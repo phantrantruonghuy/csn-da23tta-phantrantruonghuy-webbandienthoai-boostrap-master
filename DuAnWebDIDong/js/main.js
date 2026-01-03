@@ -1830,10 +1830,16 @@ function initSearch() {
 
 // ==================== ACCESSORIES RECOMMENDATIONS ====================
 function getRecommendedAccessories(productName, limit = 4) {
-    const accessories = JSON.parse(localStorage.getItem('accessories')) || [];
+    const accessories = JSON.parse(localStorage.getItem('accessories')) || defaultAccessories || [];
+    
+    if (!accessories || accessories.length === 0) {
+        console.log('No accessories data found');
+        return [];
+    }
     
     // Lọc phụ kiện tương thích với sản phẩm
     const compatible = accessories.filter(acc => {
+        if (!acc.compatibleWith || !Array.isArray(acc.compatibleWith)) return false;
         return acc.compatibleWith.some(brand => 
             productName.toLowerCase().includes(brand.toLowerCase())
         );
@@ -1841,11 +1847,12 @@ function getRecommendedAccessories(productName, limit = 4) {
     
     // Nếu không đủ, thêm phụ kiện universal
     if (compatible.length < limit) {
-        const universal = accessories.filter(acc => 
-            acc.compatibleWith.includes('iPhone') || 
-            acc.compatibleWith.includes('Samsung') ||
-            acc.compatibleWith.includes('Android')
-        );
+        const universal = accessories.filter(acc => {
+            if (!acc.compatibleWith || !Array.isArray(acc.compatibleWith)) return false;
+            return acc.compatibleWith.includes('iPhone') || 
+                   acc.compatibleWith.includes('Samsung') ||
+                   acc.compatibleWith.includes('Android');
+        });
         compatible.push(...universal);
     }
     
@@ -1863,15 +1870,22 @@ function renderAccessoryCard(accessory) {
         <div class="col">
             <div class="card product-card h-100 shadow-sm">
                 ${discountBadge}
-                <img src="${accessory.image}" class="card-img-top p-3" alt="${accessory.name}" style="height: 200px; object-fit: contain;">
+                <a href="chitiet-phukien.html?id=${accessory.id}">
+                    <img src="${accessory.image}" class="card-img-top p-3" alt="${accessory.name}" style="height: 200px; object-fit: contain;">
+                </a>
                 <div class="card-body d-flex flex-column">
-                    <h6 class="card-title text-truncate" title="${accessory.name}">${accessory.name}</h6>
+                    <a href="chitiet-phukien.html?id=${accessory.id}" class="text-decoration-none text-dark">
+                        <h6 class="card-title text-truncate" title="${accessory.name}">${accessory.name}</h6>
+                    </a>
                     <div class="mt-auto">
                         <div class="d-flex align-items-center mb-2">
                             <span class="text-danger fw-bold fs-5">${formatPrice(accessory.price)}</span>
                             ${accessory.oldPrice ? `<span class="text-muted text-decoration-line-through ms-2 small">${formatPrice(accessory.oldPrice)}</span>` : ''}
                         </div>
                         <div class="d-flex gap-2">
+                            <a href="chitiet-phukien.html?id=${accessory.id}" class="btn btn-outline-primary btn-sm">
+                                <i class="fas fa-eye"></i> Xem
+                            </a>
                             <button class="btn btn-primary btn-sm flex-grow-1" onclick="addAccessoryToCart(${accessory.id})">
                                 <i class="fas fa-cart-plus"></i> Thêm
                             </button>
@@ -1949,37 +1963,63 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // ==================== FLASH SALE TIMER ====================
 function initFlashSale() {
-    // Set flash sale end time: default to 6 hours from now (can be changed)
-    const storedEnd = localStorage.getItem('flashSaleEnd');
-    let endTime;
-    if (storedEnd) {
-        endTime = new Date(storedEnd);
-    } else {
-        endTime = new Date(Date.now() + 6 * 60 * 60 * 1000);
-        localStorage.setItem('flashSaleEnd', endTime.toISOString());
-    }
-
+    // Flash Sale chạy từ 08:00 - 22:00 hàng ngày
     const countdownEl = document.getElementById('flashSaleCountdown');
     const bannerEl = document.getElementById('flashSaleBanner');
 
+    if (!bannerEl || !countdownEl) return;
+
     function updateCountdown() {
         const now = new Date();
-        const diff = endTime - now;
-        if (diff <= 0) {
-            if (bannerEl) {
-                bannerEl.querySelector('#flashSaleTitle').textContent = 'Flash Sale đã kết thúc';
-                if (countdownEl) countdownEl.textContent = '00:00:00';
-                bannerEl.classList.add('flash-ended');
-            }
-            clearInterval(intervalId);
-            return;
+        const currentHour = now.getHours();
+        
+        // Tính thời gian bắt đầu (08:00 hôm nay)
+        const startTime = new Date(now);
+        startTime.setHours(8, 0, 0, 0);
+        
+        // Tính thời gian kết thúc (22:00 hôm nay)
+        const endTime = new Date(now);
+        endTime.setHours(22, 0, 0, 0);
+        
+        // Tính thời gian bắt đầu ngày mai (08:00 ngày mai)
+        const nextStartTime = new Date(now);
+        nextStartTime.setDate(nextStartTime.getDate() + 1);
+        nextStartTime.setHours(8, 0, 0, 0);
+
+        let diff, titleText, isActive = false;
+
+        if (currentHour < 8) {
+            // Trước 08:00 - Đếm ngược đến giờ bắt đầu
+            diff = startTime - now;
+            titleText = '<i class="fas fa-clock"></i> Flash Sale bắt đầu lúc 08:00';
+            bannerEl.classList.add('flash-waiting');
+            bannerEl.classList.remove('flash-ended', 'flash-active');
+        } else if (currentHour >= 8 && currentHour < 22) {
+            // Từ 08:00 - 22:00 - Flash Sale đang chạy
+            diff = endTime - now;
+            titleText = '<i class="fas fa-bolt"></i> Flash Sale: Giảm đến 50% — Số lượng có hạn!';
+            isActive = true;
+            bannerEl.classList.add('flash-active');
+            bannerEl.classList.remove('flash-ended', 'flash-waiting');
+        } else {
+            // Sau 22:00 - Đếm ngược đến ngày mai 08:00
+            diff = nextStartTime - now;
+            titleText = '<i class="fas fa-moon"></i> Flash Sale tiếp tục vào 08:00 ngày mai';
+            bannerEl.classList.add('flash-ended');
+            bannerEl.classList.remove('flash-active', 'flash-waiting');
         }
+
+        // Cập nhật title
+        const titleEl = bannerEl.querySelector('#flashSaleTitle');
+        if (titleEl) titleEl.innerHTML = titleText;
+
+        // Tính và hiển thị countdown
         const hours = Math.floor(diff / (1000 * 60 * 60));
         const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
         const seconds = Math.floor((diff % (1000 * 60)) / 1000);
-        if (countdownEl) countdownEl.textContent = `${String(hours).padStart(2,'0')}:${String(minutes).padStart(2,'0')}:${String(seconds).padStart(2,'0')}`;
+        countdownEl.textContent = `${String(hours).padStart(2,'0')}:${String(minutes).padStart(2,'0')}:${String(seconds).padStart(2,'0')}`;
     }
 
     updateCountdown();
-    const intervalId = setInterval(updateCountdown, 1000);
+    setInterval(updateCountdown, 1000);
 }

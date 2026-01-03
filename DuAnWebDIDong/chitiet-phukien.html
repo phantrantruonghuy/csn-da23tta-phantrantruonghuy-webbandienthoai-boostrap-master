@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chi tiết phụ kiện - Thế Giới Di Động</title>
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="images/banners/08Oct Anis  Free Upload .png">
+    
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <!-- Header -->
+<header class="header-top py-2">
+  <div class="container-fluid px-4">
+    <div class="d-flex align-items-center justify-content-between flex-wrap">
+      <div id="logoContainer"></div>
+      <form class="search-form flex-grow-1 mx-3" style="max-width:600px;">
+        <div class="input-group rounded-pill overflow-hidden shadow-sm">
+          <input type="text" class="form-control border-0" placeholder="Bạn cần tìm gì?" id="searchInput">
+          <button class="btn btn-light px-4" type="submit">
+            <i class="fas fa-search text-dark"></i>
+          </button>
+        </div>
+      </form>
+      <div class="header-actions d-flex align-items-center gap-4 flex-shrink-0">
+        <a href="lienhe.html" class="text-dark text-decoration-none d-flex align-items-center gap-1">
+          <i class="fas fa-headset"></i> <span>Hỗ trợ</span>
+        </a>
+        <a href="login.html" class="text-dark text-decoration-none d-flex align-items-center gap-1" id="userAccountLink">
+          <i class="fas fa-user"></i> <span>Đăng nhập</span>
+        </a>
+        <a href="giohang.html" class="text-dark text-decoration-none position-relative d-flex align-items-center gap-1">
+          <i class="fas fa-shopping-cart"></i> <span>Giỏ hàng</span>
+          <span class="badge bg-danger rounded-pill position-absolute top-0 start-100 translate-middle" id="cartCount">0</span>
+        </a>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- Main Content -->
+<main class="py-4">
+    <div class="container">
+        <!-- Breadcrumb -->
+        <nav aria-label="breadcrumb" class="mb-4">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="index.html">Trang chủ</a></li>
+                <li class="breadcrumb-item"><a href="sanpham.html">Sản phẩm</a></li>
+                <li class="breadcrumb-item active" id="breadcrumbName">Chi tiết phụ kiện</li>
+            </ol>
+        </nav>
+
+        <!-- Product Detail -->
+        <div class="row" id="accessoryDetail">
+            <!-- Loading -->
+            <div class="col-12 text-center py-5">
+                <div class="spinner-border text-primary" role="status">
+                    <span class="visually-hidden">Đang tải...</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+<!-- Footer -->
+<footer class="footer py-5" style="background-color: #ffffcc; color: #000;">
+    <div class="container">
+        <div class="row g-4">
+            <div class="col-md-3">
+                <h5 class="text-dark mb-3" data-setting="websiteName">Thế Giới Di Động</h5>
+                <p>Hệ thống bán lẻ điện thoại di động hàng đầu Việt Nam</p>
+                <div class="social-links mt-3" id="socialLinks">
+                    <a href="#" class="text-dark me-3" data-social="facebook" style="display: none;"><i class="fab fa-facebook fa-2x"></i></a>
+                    <a href="#" class="text-dark me-3" data-social="youtube" style="display: none;"><i class="fab fa-youtube fa-2x"></i></a>
+                    <a href="#" class="text-dark me-3" data-social="instagram" style="display: none;"><i class="fab fa-instagram fa-2x"></i></a>
+                    <a href="#" class="text-dark" data-social="zalo" style="display: none;"><i class="fas fa-comment-dots fa-2x"></i></a>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <h5 class="text-warning mb-3">Thông tin</h5>
+                <ul class="list-unstyled">
+                    <li><a href="gioi-thieu.html" class="text-dark text-decoration-none">Giới thiệu công ty</a></li>
+                    <li><a href="chinh-sach-bao-mat.html" class="text-dark text-decoration-none">Chính sách bảo mật</a></li>
+                    <li><a href="quy-che-hoat-dong.html" class="text-dark text-decoration-none">Quy chế hoạt động</a></li>
+                    <li><a href="kiem-tra-hoa-don.html" class="text-dark text-decoration-none">Kiểm tra hóa đơn</a></li>
+                </ul>
+            </div>
+            <div class="col-md-3">
+                <h5 class="text-warning mb-3">Hỗ trợ</h5>
+                <ul class="list-unstyled">
+                    <li><a href="huong-dan-mua-hang.html" class="text-dark text-decoration-none">Hướng dẫn mua hàng</a></li>
+                    <li><a href="huong-dan-thanh-toan.html" class="text-dark text-decoration-none">Hướng dẫn thanh toán</a></li>
+                    <li><a href="chinh-sach-doi-tra.html" class="text-dark text-decoration-none">Chính sách đổi trả</a></li>
+                    <li><a href="bao-hanh-sua-chua.html" class="text-dark text-decoration-none">Bảo hành & sửa chữa</a></li>
+                </ul>
+            </div>
+            <div class="col-md-3">
+                <h5 class="text-warning mb-3">Liên hệ</h5>
+                <ul class="list-unstyled">
+                    <li><i class="fas fa-phone"></i> Hotline: <span data-setting="hotline">1800.6789</span></li>
+                    <li><i class="fas fa-envelope"></i> Email: <span data-setting="email">info@thegioididong.com</span></li>
+                    <li><i class="fas fa-map-marker-alt"></i> <span data-setting="address">123 Đường ABC, Quận 1, TP.HCM</span></li>
+                </ul>
+            </div>
+        </div>
+        <hr class="my-4 bg-dark">
+        <div class="text-center">
+            <p class="mb-0">&copy; 2025 <span data-setting="websiteName">Thế Giới Di Động</span>. All Rights Reserved.</p>
+        </div>
+    </div>
+</footer>
+
+<!-- Back to Top Button -->
+<button id="backToTop" class="btn btn-primary btn-floating">
+    <i class="fas fa-arrow-up"></i>
+</button>
+
+<!-- Bootstrap 5 JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+<!-- Custom JS -->
+<script src="js/settings-loader.js"></script>
+<script src="js/auth.js"></script>
+<script src="js/main.js"></script>
+<script>
+    // Initialize logo
+    document.addEventListener('DOMContentLoaded', function() {
+        const logoContainer = document.getElementById('logoContainer');
+        if (logoContainer) {
+            logoContainer.innerHTML = createLogo();
+        }
+        
+        loadAccessoryDetail();
+    });
+
+    function getAccessoryIdFromURL() {
+        const params = new URLSearchParams(window.location.search);
+        return parseInt(params.get('id'));
+    }
+
+    function loadAccessoryDetail() {
+        const accessoryId = getAccessoryIdFromURL();
+        const accessories = JSON.parse(localStorage.getItem('accessories')) || defaultAccessories || [];
+        const accessory = accessories.find(a => a.id === accessoryId);
+        
+        const container = document.getElementById('accessoryDetail');
+        
+        if (!accessory) {
+            container.innerHTML = `
+                <div class="col-12 text-center py-5">
+                    <i class="fas fa-exclamation-triangle fa-4x text-warning mb-3"></i>
+                    <h4>Không tìm thấy phụ kiện</h4>
+                    <p class="text-muted">Phụ kiện bạn tìm kiếm không tồn tại hoặc đã bị xóa.</p>
+                    <a href="sanpham.html" class="btn btn-primary">Quay lại danh sách sản phẩm</a>
+                </div>
+            `;
+            return;
+        }
+
+        // Update breadcrumb
+        document.getElementById('breadcrumbName').textContent = accessory.name;
+        document.title = accessory.name + ' - Thế Giới Di Động';
+
+        // Type labels
+        const typeLabels = {
+            'case': 'Ốp lưng',
+            'cable': 'Cáp sạc',
+            'charger': 'Củ sạc',
+            'earphone': 'Tai nghe',
+            'screen-protector': 'Miếng dán màn hình',
+            'powerbank': 'Pin dự phòng',
+            'other': 'Khác'
+        };
+
+        container.innerHTML = `
+            <div class="col-md-5">
+                <div class="card shadow-sm">
+                    <div class="position-relative">
+                        ${accessory.discount > 0 ? `<span class="badge bg-danger position-absolute top-0 end-0 m-3 fs-6">-${accessory.discount}%</span>` : ''}
+                        <img src="${accessory.image}" class="card-img-top p-4" alt="${accessory.name}" style="max-height: 400px; object-fit: contain;">
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-7">
+                <h2 class="mb-3">${accessory.name}</h2>
+                
+                <div class="d-flex align-items-center gap-3 mb-3">
+                    <span class="badge bg-secondary">${typeLabels[accessory.type] || accessory.type}</span>
+                    <span class="text-muted">Thương hiệu: <strong>${accessory.brand}</strong></span>
+                    <span class="text-muted">
+                        <i class="fas fa-star text-warning"></i> ${accessory.rating || 5}/5
+                    </span>
+                </div>
+
+                <div class="mb-4">
+                    <span class="text-danger fw-bold fs-2">${formatPrice(accessory.price)}</span>
+                    ${accessory.oldPrice ? `<span class="text-muted text-decoration-line-through fs-5 ms-2">${formatPrice(accessory.oldPrice)}</span>` : ''}
+                </div>
+
+                <div class="mb-4">
+                    <h6><i class="fas fa-check-circle text-success"></i> Tương thích với:</h6>
+                    <div class="d-flex flex-wrap gap-2">
+                        ${(accessory.compatibleWith || []).map(item => `<span class="badge bg-light text-dark border">${item}</span>`).join('')}
+                    </div>
+                </div>
+
+                <div class="mb-4">
+                    <h6><i class="fas fa-box"></i> Tình trạng:</h6>
+                    <span class="${accessory.stock > 0 ? 'text-success' : 'text-danger'}">
+                        ${accessory.stock > 0 ? `Còn hàng (${accessory.stock} sản phẩm)` : 'Hết hàng'}
+                    </span>
+                </div>
+
+                ${accessory.description ? `
+                <div class="mb-4">
+                    <h6><i class="fas fa-info-circle"></i> Mô tả:</h6>
+                    <p class="text-muted">${accessory.description}</p>
+                </div>
+                ` : ''}
+
+                <div class="d-flex gap-3 mb-4">
+                    <div class="input-group" style="width: 130px;">
+                        <button class="btn btn-outline-secondary" type="button" onclick="decreaseQty()">-</button>
+                        <input type="number" class="form-control text-center" id="quantity" value="1" min="1" max="${accessory.stock}">
+                        <button class="btn btn-outline-secondary" type="button" onclick="increaseQty()">+</button>
+                    </div>
+                    <button class="btn btn-primary btn-lg flex-grow-1" onclick="addToCartWithQty(${accessory.id})" ${accessory.stock <= 0 ? 'disabled' : ''}>
+                        <i class="fas fa-cart-plus"></i> Thêm vào giỏ hàng
+                    </button>
+                </div>
+
+                <div class="card bg-light">
+                    <div class="card-body">
+                        <h6><i class="fas fa-shield-alt text-primary"></i> Chính sách bảo hành</h6>
+                        <ul class="mb-0 small">
+                            <li>Bảo hành 12 tháng chính hãng</li>
+                            <li>Đổi trả trong 7 ngày nếu lỗi nhà sản xuất</li>
+                            <li>Miễn phí vận chuyển đơn hàng từ 500.000đ</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        `;
+    }
+
+    function decreaseQty() {
+        const input = document.getElementById('quantity');
+        if (parseInt(input.value) > 1) {
+            input.value = parseInt(input.value) - 1;
+        }
+    }
+
+    function increaseQty() {
+        const input = document.getElementById('quantity');
+        const max = parseInt(input.max) || 99;
+        if (parseInt(input.value) < max) {
+            input.value = parseInt(input.value) + 1;
+        }
+    }
+
+    function addToCartWithQty(accessoryId) {
+        const quantity = parseInt(document.getElementById('quantity').value) || 1;
+        const accessories = JSON.parse(localStorage.getItem('accessories')) || [];
+        const accessory = accessories.find(a => a.id === accessoryId);
+        
+        if (!accessory) {
+            showNotification('Không tìm thấy sản phẩm!', 'error');
+            return;
+        }
+        
+        const cartKey = getCartKey();
+        let cart = JSON.parse(localStorage.getItem(cartKey)) || [];
+        
+        const existingItem = cart.find(item => item.id === accessoryId);
+        
+        if (existingItem) {
+            existingItem.quantity += quantity;
+        } else {
+            cart.push({
+                id: accessory.id,
+                name: accessory.name,
+                price: accessory.price,
+                image: accessory.image,
+                quantity: quantity,
+                category: 'accessory'
+            });
+        }
+        
+        localStorage.setItem(cartKey, JSON.stringify(cart));
+        updateCartCount();
+        showNotification(`Đã thêm ${quantity} phụ kiện vào giỏ hàng!`, 'success');
+    }
+</script>
+</body>
+</html>

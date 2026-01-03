@@ -92,18 +92,25 @@
 
 <!-- Flash Sale Banner -->
 <div id="flashSaleBanner" class="flash-sale-banner py-3">
-  <div class="container d-flex align-items-center justify-content-between">
+  <div class="container d-flex align-items-center justify-content-between flex-wrap gap-3">
     <div class="d-flex align-items-center gap-3">
-      <div class="flash-icon bg-danger text-white rounded d-flex align-items-center justify-content-center" style="width:80px;height:80px;font-size:28px;">
-        <i class="fas fa-bolt"></i>
+      <div class="flash-icon rounded overflow-hidden" style="width:100px;height:100px;">
+        <img src="images/banners/bb2.webp" alt="Flash Sale" style="width:100%;height:100%;object-fit:cover;">
       </div>
       <div>
-        <h4 class="mb-1 text-white" id="flashSaleTitle">Flash Sale: Giảm đến 50% — Số lượng có hạn!</h4>
-        <div class="text-white small">Kết thúc trong: <span id="flashSaleCountdown">00:00:00</span></div>
+        <h4 class="mb-1 text-white" id="flashSaleTitle"><i class="fas fa-bolt"></i> Flash Sale: Giảm đến 50% — Số lượng có hạn!</h4>
+        <div class="text-white small">
+          <i class="fas fa-clock"></i> Thời gian: <strong>08:00 - 22:00</strong> hàng ngày
+        </div>
+        <div class="text-white small mt-1">
+          Kết thúc trong: <span id="flashSaleCountdown" class="badge bg-dark">00:00:00</span>
+        </div>
       </div>
     </div>
     <div>
-      <a href="sanpham.html?promo=flash" class="btn btn-lg btn-warning" id="flashSaleCta">Mua ngay</a>
+      <a href="sanpham.html?promo=flash" class="btn btn-lg btn-warning" id="flashSaleCta">
+        <i class="fas fa-shopping-cart"></i> Mua ngay
+      </a>
     </div>
   </div>
 </div>
@@ -739,8 +746,9 @@
         // === Hot products countdown ===
         const hotCountdownEl = document.getElementById('hotCountdown');
         if (hotCountdownEl) {
-          // target: 2025-12-31 23:59 local time
-          const target = new Date('2025-12-31T23:59:59');
+          // Get target from localStorage or use default
+          const savedHotTarget = localStorage.getItem('hotCountdownTarget');
+          const target = savedHotTarget ? new Date(savedHotTarget) : new Date('2025-12-31T23:59:59');
 
           function updateHotCountdown() {
             const now = new Date();
@@ -772,8 +780,9 @@
         // === Discount products countdown ===
         const discountCountdownEl = document.getElementById('discountCountdown');
         if (discountCountdownEl) {
-          // target: 2025-12-31 23:59 local time
-          const target = new Date('2025-12-31T23:59:59');
+          // Get target from localStorage or use default
+          const savedDiscountTarget = localStorage.getItem('discountCountdownTarget');
+          const target = savedDiscountTarget ? new Date(savedDiscountTarget) : new Date('2025-12-31T23:59:59');
 
           function updateDiscountCountdown() {
             const now = new Date();
@@ -802,6 +811,23 @@
           setInterval(updateDiscountCountdown, 1000);
         }
       });
+
+      // Reset countdown functions
+      function resetHotCountdown() {
+        // Reset to 30 days from now
+        const newTarget = new Date();
+        newTarget.setDate(newTarget.getDate() + 30);
+        localStorage.setItem('hotCountdownTarget', newTarget.toISOString());
+        location.reload();
+      }
+
+      function resetDiscountCountdown() {
+        // Reset to 30 days from now
+        const newTarget = new Date();
+        newTarget.setDate(newTarget.getDate() + 30);
+        localStorage.setItem('discountCountdownTarget', newTarget.toISOString());
+        location.reload();
+      }
     </script>
 </body>
 </html>
